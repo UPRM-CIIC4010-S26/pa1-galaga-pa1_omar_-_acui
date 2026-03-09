@@ -96,7 +96,10 @@ void Program::ManageEnemyRespawns() {
 
     respawnCooldown -= 1;
     if (respawnCooldown <= 0) {
-        respawnCooldown = 1080;
+        respawnCooldown = 1080-(score /1000) *110;
+        if(respawnCooldown < 200) {
+            respawnCooldown = 200;
+                }
         for (std::pair<std::pair<float, float>, Enemy*>& p : Enemy::enemies) {
             if (!p.second && p.first.second != 150) {
 
