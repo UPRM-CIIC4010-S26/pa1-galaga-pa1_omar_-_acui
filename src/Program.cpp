@@ -36,6 +36,12 @@ void Program::Update() {
 
     if (!startup && !paused && !gameOver && pauseFrames <= 0) {
         Enemy::ManageEnemies(player->hitBox);
+
+        score += Enemy::score_this_frame;
+        Enemy::score_this_frame = 0;
+
+        ExtraLive();
+
         StdEnemy::attackReset();
         ManageEnemyRespawns();
         player->update();
@@ -103,7 +109,6 @@ void Program::ManageEnemyRespawns() {
         for (std::pair<std::pair<float, float>, Enemy*>& p : Enemy::enemies) {
             if (!p.second && p.first.second != 150) {
 
-                score += 100;
                 ExtraLive();
 
                 int eType = GetRandomValue(1, 3);
@@ -169,7 +174,7 @@ void Program::KeyInputs() {
         score += 500;
         ExtraLive();
     }
-    
+
     if (gameOver && IsKeyPressed(KEY_ENTER)) {
         gameOver = false;
         Reset();

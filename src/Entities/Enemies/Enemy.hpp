@@ -15,6 +15,7 @@ class Enemy {
         int frameCooldown = 30;
         
     public:
+        inline static int score_this_frame = 0;
         int health = 1;
         std::pair<float, float> position;
         HitBox hitBox;
@@ -61,6 +62,10 @@ class Enemy {
                         Animation::animations.push_back(
                             Animation(p.second->position.first, p.second->position.second, 155, 0, 33, 33, 30, 30, 4, ImageManager::SpriteSheet)
                         );
+
+                        Enemy::score_this_frame += 100;
+
+                        delete p.second;
                         p.second = nullptr;
                     }
                 }
