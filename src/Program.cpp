@@ -72,6 +72,7 @@ void Program::Update() {
 
 void Program::Draw() {
     background.Draw();
+    DrawText(TextFormat("Score: %i", score), 10, 10, 30, WHITE);
     if (pauseFrames <= 0 && !gameOver) player->draw();
     for (Animation& a : Animation::animations) a.draw();
 
@@ -98,6 +99,9 @@ void Program::ManageEnemyRespawns() {
         respawnCooldown = 1080;
         for (std::pair<std::pair<float, float>, Enemy*>& p : Enemy::enemies) {
             if (!p.second && p.first.second != 150) {
+
+                score += 100;
+
                 int eType = GetRandomValue(1, 3);
 
                 if (eType == 1) {
@@ -156,6 +160,9 @@ void Program::KeyInputs() {
     if (!paused && !startup && IsKeyPressed('O')) gameOver = !gameOver;
     if (!gameOver && !paused && IsKeyPressed('I')) startup = !startup;
     if (IsKeyPressed('H')) HitBox::drawHitbox = !HitBox::drawHitbox;
+
+    if (IsKeyPressed('K')) score += 500;
+
     
     if (gameOver && IsKeyPressed(KEY_ENTER)) {
         gameOver = false;
@@ -191,6 +198,7 @@ void Program::Reset() {
     count = 0;
     delay = 0;
     lives = 3;
+    score = 0;
 
     Enemy::enemies.push_back(std::pair<std::pair<float, float>, Enemy*> {
         std::pair<float, float>{350, 150}, 
