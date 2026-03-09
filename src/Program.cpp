@@ -101,6 +101,7 @@ void Program::ManageEnemyRespawns() {
             if (!p.second && p.first.second != 150) {
 
                 score += 100;
+                ExtraLive();
 
                 int eType = GetRandomValue(1, 3);
 
@@ -161,8 +162,10 @@ void Program::KeyInputs() {
     if (!gameOver && !paused && IsKeyPressed('I')) startup = !startup;
     if (IsKeyPressed('H')) HitBox::drawHitbox = !HitBox::drawHitbox;
 
-    if (IsKeyPressed('K')) score += 500;
-
+    if (IsKeyPressed('K')){
+        score += 500;
+        ExtraLive();
+    }
     
     if (gameOver && IsKeyPressed(KEY_ENTER)) {
         gameOver = false;
@@ -199,6 +202,7 @@ void Program::Reset() {
     delay = 0;
     lives = 3;
     score = 0;
+    liveBonusScore=0;
 
     Enemy::enemies.push_back(std::pair<std::pair<float, float>, Enemy*> {
         std::pair<float, float>{350, 150}, 
@@ -220,3 +224,11 @@ void Program::Reset() {
         });
     }
 }
+   void Program::ExtraLive(){
+        if (score /1000 >liveBonusScore) {
+    if (lives< 5) {
+        lives++;
+    }
+    liveBonusScore++;
+}
+    }
