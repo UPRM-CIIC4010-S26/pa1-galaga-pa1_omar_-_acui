@@ -1,16 +1,19 @@
 #pragma once
 #include "Enemy.hpp"
+#include <cstdlib>
 
 class DyEnemy : public Enemy {
     private: 
         float angle = 135;
         float aimAngle = 225;
         bool loop = false;
+        bool useAltTexture = false;
 
     public:
         DyEnemy(float x, float y) : Enemy(x, y) { 
             this->cooldown = GetRandomValue(90, 300);
             this->health = 1; 
+            useAltTexture = (GetRandomValue(0, 1) == 0);
         }
 
         void draw() override;

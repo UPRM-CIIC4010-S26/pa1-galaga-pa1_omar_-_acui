@@ -3,6 +3,13 @@
 
 void DyEnemy::draw() {
     if (HitBox::drawHitbox) this->hitBox.draw();
+
+    Rectangle source = {2, 128, 13, 14};
+
+    if (useAltTexture){
+        source = {2, 147, 13, 13};
+    }
+
     DrawTexturePro(ImageManager::SpriteSheet, Rectangle{2, 128, 13, 14}, 
                 Rectangle{this->position.first + 15, this->position.second + 15, 30, 30}, 
                 Vector2{15, 15}, this->aimAngle, WHITE);
